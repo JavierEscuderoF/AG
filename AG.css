@@ -1,0 +1,206 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25-jun-2017, 19:01:50
+    Author     : Javier
+*/
+a {
+    text-decoration:none;
+    color : black;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #4CAF50;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.resaltar {
+    color: red !important;
+}
+
+.gris {
+    color : lightgray;
+}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+}
+
+.smallcaps {
+    font-variant: small-caps;
+}
+
+.ref{
+    font-size: 50%;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+.percentbar { 
+    margin: 5px;
+    background:#CCCCCC; 
+    border:1px solid #666666; 
+    height:10px; 
+    width:auto;
+}
+.percentbar div { 
+    background: #28B8C0; 
+    height: 10px; 
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+}
+
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.centrar {
+    text-align: center;
+}
+
+.centrado {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    padding: 2px;
+    min-height:100%;
+    height: 100%;
+}
+
+form {
+    margin-top: 20px;
+    width: auto;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+select {
+    font-family: 'Roboto', sans-serif;
+}
+
+input.principal  {
+    width:auto !important;
+    border: 2px solid red !important;
+    margin-left: 15px !important;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 8px 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit], input[type=reset] {
+    width: 25%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+.subformulario {
+    padding: 8px 10px;
+    margin-bottom: 20px;
+    width:40%;
+    float:left;
+    margin-left: 2%;
+    margin-right: 4%;
+}
+
+.formEstad {
+    width: 25%;
+    float:left;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin: 5px;
+}
+
+.clear {
+    clear: both;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.tercio {
+    width: 25% !important;
+}
+
+.card {
+    /* Add shadows to create the "card" effect */
+    float:left;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width:92%;
+    max-width:300px;
+    margin-left:20px;
+    margin-top: 15px;
+    margin-right:auto;
+    display:block;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+    padding: 2px 16px;
+}
+
