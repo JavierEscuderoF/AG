@@ -13,18 +13,36 @@ and open the template in the editor.
               type="image/png" 
               href="../tree.png">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <?php include '../utilidades/utilidades.php'; ?>
+        <?php
+        include '../utilidades/utilidades.php';
+        ?>
     </head>
     <body>
         <?php
         $tomo = filter_input(INPUT_GET, "tomo");
         $id = filter_input(INPUT_GET, "id");
+        $db = conectar_bd();
+        $tipo_query = "
+            SELECT *
+            FROM colecciones
+                JOIN tipocoleccion ON tipoColeccionFK = idTipoColeccion
+            WHERE idColeccion=" . $id . ";";
+        $tipo = buscar_unico($tipo_query, $db);
         ?>
         <header>
             <div class="topnav" id="myTopnav">
                 <a href="../index.php">Home</a>
                 <a href="./coleccion.php?id=<?php echo $id; ?>&tomo=<?php echo $tomo - 1; ?>">Tomo anterior</a>
                 <a href="./coleccion.php?id=<?php echo $id; ?>&tomo=<?php echo $tomo + 1; ?>">Tomo siguiente</a>
+                <?php
+                switch ($tipo['idTipoColeccion']) {
+                    case 1:
+                        echo '<a href="../familias/crearFamilia.php">Nueva familia</a>';
+
+                    case 2:
+                        echo '<a href="../personas/crearPersona.php">Nueva persona</a>';
+                }
+                ?>
             </div>
             <h1>Tomo de 
                 <?php
@@ -38,14 +56,6 @@ and open the template in the editor.
         </header>
 
         <?php
-        $db = conectar_bd();
-        $tipo_query = "
-            SELECT *
-            FROM colecciones
-                JOIN tipocoleccion ON tipoColeccionFK = idTipoColeccion
-            WHERE idColeccion=" . $id . ";";
-        $tipo = buscar_unico($tipo_query, $db);
-        
         switch ($tipo['idTipoColeccion']) {
             case 1:
                 $query = "
@@ -66,7 +76,7 @@ and open the template in the editor.
                         if ($familia['fechaMatrimonio']) {
                             $a = fecha_corta($familia['fechaMatrimonio'], 0);
                         } else {
-                            $a = '<a class="gris" href="../familia/editarFamilia.php?id=' . $familia['idFamilia'] . '">✎</a>';
+                            $a = '<a class="gris" href="../familias/editarFamilia.php?id=' . $familia['idFamilia'] . '">✎</a>';
                         }
 
                         columna($a, 1);
@@ -95,7 +105,7 @@ and open the template in the editor.
                             columna($string, 0);
                         } else {
                             echo '<td class=gris>';
-                            echo $familia['nombreEsposa'] . " " . $familia['apellidoEsposa'] . ' <a class="gris" href="busquedaAvanzada.php?mujer=' . $familia['idFamilia'] . '">🔎</a></td>';
+                            echo $familia['nombreEsposa'] . " " . $familia['apellidoEsposa'] . ' <a class="gris" href="../utilidades/busquedaAvanzada.php?mujer=' . $familia['idFamilia'] . '">🔎</a></td>';
                         }
 
                         $enlace_fam = '<a href="../familias/familia.php?id=' . $familia['idFamilia'] . '">👪</a>';

@@ -89,7 +89,7 @@
                     } else {
                         echo "<p>($id) No se ha podido actualizar<p>";
                     }
-                    echo '<a href = "../familias/editarFamilia.php?id=' . $id . '">Volver</a>';
+                    echo '<a href="javascript:history.back()">Volver</a>';
                 } else if ($idPersona) {
 
                     $fechaNacimiento = filter_input(INPUT_POST, "fechaNacimiento");
@@ -131,7 +131,7 @@
                     } else {
                         echo "<p>($idPersona) No se ha podido actualizar<p>";
                     }
-                    echo '<a href = "../familias/editarPersona.php?id=' . $idPersona . '">Volver</a>';
+                    echo '<a href="javascript:history.back()">Volver</a>';
                 }
                 break;
             case "create":
