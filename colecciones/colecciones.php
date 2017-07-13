@@ -3,16 +3,16 @@
     <head>
         <meta charset="UTF-8">
         <title>Colecciones</title>
-        <link rel="stylesheet" href="AG.css" />
+        <link rel="stylesheet" href="../AG.css" />
         <link rel="icon" 
               type="image/png" 
               href="tree.png">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <?php include 'utilidades.php'; ?>
+        <?php include '../utilidades/utilidades.php'; ?>
     </head>
     <body>
         <div class="topnav" id="myTopnav">
-            <a href="index.php">Home</a>
+            <a href="../index.php">Home</a>
         </div>
         <form action="coleccion.php" method="get">
             <h3>Selecciona un tomo</h3>

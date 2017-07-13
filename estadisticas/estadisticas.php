@@ -7,14 +7,14 @@ and open the template in the editor.
 <html>
     <head>
     <div class="topnav" id="myTopnav">
-        <a href="index.php">Home</a>
-        <a href="estadisticas.php">Estadísticas</a>
-        <link rel="stylesheet" href="AG.css" />
+        <a href="../index.php">Home</a>
+        <a href="../estadisticas/estadisticas.php">Estadísticas</a>
+        <link rel="stylesheet" href="../AG.css" />
         <link rel="icon" 
               type="image/png" 
               href="tree.png">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <?php include 'utilidades.php'; ?>
+        <?php include '../utilidades/utilidades.php'; ?>
     </div>
     <meta charset="UTF-8">
     <title>Estadísticas</title>
@@ -37,7 +37,7 @@ GROUP BY tomo";
         $resultado_contar = mysqli_query($db, $contar);
 
         while ($fila = mysqli_fetch_row($resultado_contar)) {
-            echo '<a href="coleccion.php?id=2'
+            echo '<a href="../colecciones/coleccion.php?id=2'
             . '&tomo=' . $fila[3] . '">Tomo ' . $fila[3] . '</a>';
             echo ": " . $fila[0] . " de " . $fila[1] . " (" . $fila[2] . "%)<br>";
             echo '<div class="percentbar" ;">';
@@ -62,7 +62,7 @@ GROUP BY tomo";
         $resultado_contar = mysqli_query($db, $contar);
 
         while ($fila = mysqli_fetch_row($resultado_contar)) {
-            echo '<a href="coleccion.php?id=1'
+            echo '<a href="../colecciones/coleccion.php?id=1'
             . '&tomo=' . $fila[3] . '">Tomo ' . $fila[3] . '</a>';
             echo ": " . $fila[0] . " de " . $fila[1] . " (" . $fila[2] . "%)<br>";
             echo '<div class="percentbar" ;">';
@@ -86,7 +86,7 @@ GROUP BY tomo";
         $resultado_contar = mysqli_query($db, $contar);
 
         while ($fila = mysqli_fetch_row($resultado_contar)) {
-            echo '<a href="coleccion.php?id=1'
+            echo '<a href="../colecciones/coleccion.php?id=1'
             . '&tomo=' . $fila[3] . '">Tomo ' . $fila[3] . '</a>';
             echo ": " . $fila[0] . " de " . $fila[1] . " (" . $fila[2] . "%)<br>";
             echo '<div class="percentbar" ;">';

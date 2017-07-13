@@ -3,16 +3,16 @@
     <head>
         <meta charset="UTF-8">
     <div class="topnav" id="myTopnav">
-        <a href="index.php">Home</a>
+        <a href="../index.php">Home</a>
         <a href="javascript:history.back()">Volver</a>
     </div>
     <title>Nueva persona</title>
-    <link rel="stylesheet" href="AG.css" />
+    <link rel="stylesheet" href="../AG.css" />
     <link rel="icon" 
           type="image/png" 
           href="tree.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <?php include 'utilidades.php'; ?>
+    <?php include '../utilidades/utilidades.php'; ?>
 
 </head>
 <body>
@@ -20,7 +20,7 @@
         <h2>
             Insertar nueva persona en la base de datos
         </h2>
-        <form action="update.php" method="post">
+        <form action="../utilidades/update.php" method="post">
             <input type="hidden" name="action" value="create">
             <input type="hidden" name="target" value="persona">
 

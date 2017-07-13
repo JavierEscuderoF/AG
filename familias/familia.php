@@ -3,14 +3,14 @@
     <head>
         <meta charset="UTF-8">
     <div class="topnav" id="myTopnav">
-        <a href="index.php">Home</a>
+        <a href="../index.php">Home</a>
         <a href="javascript:history.back()">Volver</a>
     </div>
     <title>Matrimonio</title>
-    <link rel="stylesheet" href="AG.css" />
+    <link rel="stylesheet" href="../AG.css" />
     <link rel="icon" type="image/png" href="tree.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <?php include 'utilidades.php'; ?>
+    <?php include '../utilidades/utilidades.php'; ?>
 </head>
 <body>
     <?php

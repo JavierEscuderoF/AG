@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Actualizar</title>
-        <link rel="stylesheet" href="AG.css" />
+        <link rel="stylesheet" href="../AG.css" />
         <link rel="icon" 
               type="image/png" 
               href="tree.png">
@@ -89,7 +89,7 @@
                     } else {
                         echo "<p>($id) No se ha podido actualizar<p>";
                     }
-                    echo '<a href = "editarFamilia.php?id=' . $id . '">Volver</a>';
+                    echo '<a href = "../familias/editarFamilia.php?id=' . $id . '">Volver</a>';
                 } else if ($idPersona) {
 
                     $fechaNacimiento = filter_input(INPUT_POST, "fechaNacimiento");
@@ -131,7 +131,7 @@
                     } else {
                         echo "<p>($idPersona) No se ha podido actualizar<p>";
                     }
-                    echo '<a href = "editarPersona.php?id=' . $idPersona . '">Volver</a>';
+                    echo '<a href = "../familias/editarPersona.php?id=' . $idPersona . '">Volver</a>';
                 }
                 break;
             case "create":
@@ -274,15 +274,15 @@
                                 $query_ref = "INSERT INTO referenciasmatrimonio (idMatrimonioFK,idReferenciaFK) VALUES (" . $id_Familia . "," . $id_Referencia . ");";
 
                                 if (mysqli_query($db, $query_ref)) {
-                                    echo "Inserciones realizadas correctamente.";
+                                    echo "<p>Inserciones realizadas correctamente.</p>";
                                 } else {
-                                    echo "Error en la inserción en la base de datos (referencia): " . "<br>" . mysqli_error($db);
+                                    echo "<p>Error en la inserción en la base de datos (referencia): </p>" . mysqli_error($db);
                                 }
                             } else {
-                                echo "Familia añadida correctamente.";
+                                echo "<p>Familia añadida correctamente.</p>";
                             }
                         } else {
-                            echo "Error en la inserción en la base de datos (familia): " . "<br>" . mysqli_error($db);
+                            echo "<p>Error en la inserción en la base de datos (familia): </p>" . mysqli_error($db);
                         }
                         break;
                 }

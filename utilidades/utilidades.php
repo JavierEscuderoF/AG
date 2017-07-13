@@ -53,6 +53,10 @@ function consulta($database, $id) {
             break;
         case 'familias':
             $query = searchbyid('familias', 'idFamilia') . $id;
+            break;
+        case 'lugares':
+            $query = searchbyid('lugares', 'idLugar') . $id;
+            break;
     }
     return $query;
 }
@@ -75,4 +79,15 @@ function fecha_completa($fecha) {
     $dias = array("domingo", "lunes", "martes", "miercoles", "jueves", "viernes", "sábado");
     $meses = array("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
     echo $dias[date_format($date, 'w')] . ", " . ltrim(date_format($date, 'd'), '0') . " de " . $meses[date_format($date, 'n') - 1] . " de " . date_format($date, 'Y');
+}
+
+function fecha_corta($fecha, $dia_semana) {
+    $date = date_create($fecha);
+    $dias = array("D", "L", "M", "X", "J", "V", "S");
+    if ($dia_semana) {
+        $return = $dias[date_format($date, 'w')] . ' ' . date_format($date, "d/m/Y");
+    } else {
+        $return = date_format($date, "d/m/Y");
+    }
+    return $return;
 }

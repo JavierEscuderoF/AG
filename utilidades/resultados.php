@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Resultados de la búsqueda</title>
-        <link rel="stylesheet" href="AG.css" />
+        <link rel="stylesheet" href="../AG.css" />
         <link rel="icon" 
               type="image/png" 
               href="tree.png">
@@ -108,7 +108,7 @@
                 columna(nombre_completo($familia['nombreMarido'], $familia['apellidoMarido'], 0), 0);
                 columna(nombre_completo($familia['nombreEsposa'], $familia['apellidoEsposa'], 0), 0);
 
-                $enlace_familia = '<a href="familia.php?id=' . $familia['idFamilia'] . '">👪</a>';
+                $enlace_familia = '<a href="../familias/familia.php?id=' . $familia['idFamilia'] . '">👪</a>';
                 columna($enlace_familia, 1);
 
                 echo '</tr>';
@@ -119,7 +119,7 @@
             echo "<p>No se han encontrado resultados.</p>";
         }
 
-        echo '<p><a href="crearFamilia.php?datos=' . $idPersona . '">👪 Crear nueva familia.</a></p>';
+        echo '<p><a href="../familias/crearFamilia.php?datos=' . $idPersona . '">👪 Crear nueva familia.</a></p>';
 
         if ($idPersona) {
             echo '<h3>Hermanos candidatos</h3>';
