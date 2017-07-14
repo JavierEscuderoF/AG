@@ -131,20 +131,13 @@ and open the template in the editor.
                 $resultado = mysqli_query($db, $query);
                 if ($resultado->num_rows > 0) {
                     echo '<table>';
-                    echo '<tr><th></th><th>Folio</th><th>Fecha nac.</th><th>Nombre</th><th>Padre</th><th>Madre</th><th>Familia</th></tr>';
+                    echo '<tr><th>Folio</th><th>Fecha nac.</th><th>Nombre</th><th>Padre</th><th>Madre</th><th>Familia</th></tr>';
                     while ($persona = mysqli_fetch_array($resultado)) {
 
                         if ($persona['familia']) {
                             echo "<tr>";
                         } else {
                             echo '<tr class="gris">';
-                        }
-
-                        if ($persona['familia']) {
-                            columna('', 0);
-                        } else {
-                            $lupa = '<a class="gris" href="../utilidades/busquedaAvanzada.php?persona=' . $persona['idPersona'] . '">🔎</a>';
-                            columna($lupa, 0);
                         }
 
                         columna(referencia($tomo, $persona['folio'], $persona['vuelto']), 0);
@@ -165,7 +158,8 @@ and open the template in the editor.
                             $enlace_familia = '<a href="../familias/familia.php?id=' . $persona['familia'] . '&hijo=' . $persona['idPersona'] . '">👪</a>';
                             columna($enlace_familia, 1);
                         } else {
-                            columna(' ', 0);
+                            $lupa = '<a class="gris" href="../utilidades/busquedaAvanzada.php?persona=' . $persona['idPersona'] . '">🔎</a>';
+                            columna($lupa, 1);
                         }
                         echo '</tr>';
                     }
