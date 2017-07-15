@@ -16,6 +16,12 @@ and open the template in the editor.
         <?php include 'utilidades.php'; ?>
     </head>
     <body>
+        <header>
+            <div class="topnav" id="myTopnav">
+                <a href="../index.php">Home</a>
+                <b id="logout"><a href="../logout.php">Log Out</a></b>
+            </div>
+        </header>
         <?php
         $id_Persona = filter_input(INPUT_GET, 'persona');
         $id_FamiliaH = filter_input(INPUT_GET, 'marido');

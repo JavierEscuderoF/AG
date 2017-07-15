@@ -15,6 +15,7 @@ and open the template in the editor.
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <?php
         include '../utilidades/utilidades.php';
+        include('../session.php');
         ?>
     </head>
     <body>
@@ -35,14 +36,18 @@ and open the template in the editor.
                 <a href="./coleccion.php?id=<?php echo $id; ?>&tomo=<?php echo $tomo - 1; ?>">Tomo anterior</a>
                 <a href="./coleccion.php?id=<?php echo $id; ?>&tomo=<?php echo $tomo + 1; ?>">Tomo siguiente</a>
                 <?php
-                switch ($tipo['idTipoColeccion']) {
-                    case 1:
-                        echo '<a href="../familias/crearFamilia.php">Nueva familia</a>';
-
-                    case 2:
-                        echo '<a href="../personas/crearPersona.php">Nueva persona</a>';
+                if ($usuario === 'javier') {
+                    switch ($tipo['idTipoColeccion']) {
+                        case 1:
+                            echo '<a href="../familias/crearFamilia.php">Nueva familia</a>';
+                            break;
+                        case 2:
+                            echo '<a href="../personas/crearPersona.php">Nueva persona</a>';
+                            break;
+                    }
                 }
                 ?>
+                <b id="logout"><a href="../logout.php">Log Out</a></b>
             </div>
             <h1>Tomo de 
                 <?php
@@ -60,11 +65,10 @@ and open the template in the editor.
             case 1:
                 $query = "
                     SELECT *
-                    FROM Familias F 
+                    FROM familias F 
                         JOIN referenciasmatrimonio RM ON F.idFamilia = RM.idMatrimonioFK 
-                        JOIN Referencias R ON RM.idReferenciaFK = R.idReferencia
+                        JOIN referencias R ON RM.idReferenciaFK = R.idReferencia
                     WHERE R.coleccion = " . $id . " AND R.tomo = " . $tomo . " ORDER BY folio,vuelto,fechaMatrimonio;";
-
                 $resultado = mysqli_query($db, $query);
                 if ($resultado->num_rows > 0) {
                     echo '<table>';
@@ -75,11 +79,13 @@ and open the template in the editor.
 
                         if ($familia['fechaMatrimonio']) {
                             $a = fecha_corta($familia['fechaMatrimonio'], 0);
-                        } else {
+                            columna($a, 1);
+                        } else if ($usuario === 'javier') {
                             $a = '<a class="gris" href="../familias/editarFamilia.php?id=' . $familia['idFamilia'] . '">✎</a>';
+                            columna($a, 1);
+                        } else {
+                            columna('', 0);
                         }
-
-                        columna($a, 1);
 
                         if ($familia['esposo']) {
                             $query_esp = "SELECT nombre, familia FROM personas where idPersona=" . $familia['esposo'];
@@ -92,7 +98,9 @@ and open the template in the editor.
                         } else {
                             echo '<td class=gris>';
                             echo nombre_completo($familia['nombreMarido'], $familia['apellidoMarido'], 0);
-                            echo ' <a class="gris" href="../utilidades/busquedaAvanzada.php?marido=' . $familia['idFamilia'] . '">🔎</a></td>';
+                            if ($usuario === 'javier') {
+                                echo ' <a class="gris" href="../utilidades/busquedaAvanzada.php?marido=' . $familia['idFamilia'] . '">🔎</a></td>';
+                            }
                         }
 
                         if ($familia['esposa']) {
@@ -105,7 +113,10 @@ and open the template in the editor.
                             columna($string, 0);
                         } else {
                             echo '<td class=gris>';
-                            echo $familia['nombreEsposa'] . " " . $familia['apellidoEsposa'] . ' <a class="gris" href="../utilidades/busquedaAvanzada.php?mujer=' . $familia['idFamilia'] . '">🔎</a></td>';
+                            echo nombre_completo($familia['nombreEsposa'], $familia['apellidoEsposa'], 0);
+                            if ($usuario === 'javier') {
+                                echo ' <a class="gris" href="../utilidades/busquedaAvanzada.php?mujer=' . $familia['idFamilia'] . '">🔎</a></td>';
+                            }
                         }
 
                         $enlace_fam = '<a href="../familias/familia.php?id=' . $familia['idFamilia'] . '">👪</a>';
@@ -125,7 +136,7 @@ and open the template in the editor.
                     SELECT *
                     FROM personas P 
                         JOIN referenciaspersona RP ON P.idPersona = RP.idPersonaFK 
-                        JOIN Referencias R ON RP.idReferenciaFK = R.idReferencia
+                        JOIN referencias R ON RP.idReferenciaFK = R.idReferencia
                     WHERE R.coleccion = " . $id . " AND R.tomo = " . $tomo . " ORDER BY tomo,folio,vuelto,fechaNacimiento;";
 
                 $resultado = mysqli_query($db, $query);
@@ -145,11 +156,15 @@ and open the template in the editor.
                         if ($persona['fechaNacimiento']) {
                             $fecha_casamiento = date_create($persona['fechaNacimiento']);
                             $a = date_format($fecha_casamiento, "Y") + 1;
-                        } else {
+                            columna($a, 1);
+                        } else if ($usuario === 'javier') {
                             $a = '<a class="gris" href="../personas/editarPersona.php?id=' . $persona['idPersona'] . '">✎</a>';
+                            columna($a, 1);
+                        } else {
+                            columna('', 0);
                         }
 
-                        columna($a, 1);
+
                         columna($persona['nombre'], 0);
                         columna(nombre_completo($persona['nombrePadre'], $persona['apellidoPadre'], 0), 0);
                         columna(nombre_completo($persona['nombreMadre'], $persona['apellidoMadre'], 0), 0);
@@ -157,9 +172,11 @@ and open the template in the editor.
                         if ($persona['familia']) {
                             $enlace_familia = '<a href="../familias/familia.php?id=' . $persona['familia'] . '&hijo=' . $persona['idPersona'] . '">👪</a>';
                             columna($enlace_familia, 1);
-                        } else {
+                        } else if ($usuario === 'javier') {
                             $lupa = '<a class="gris" href="../utilidades/busquedaAvanzada.php?persona=' . $persona['idPersona'] . '">🔎</a>';
                             columna($lupa, 1);
+                        } else {
+                            columna('', 0);
                         }
                         echo '</tr>';
                     }

@@ -30,7 +30,7 @@ and open the template in the editor.
             die("Unable to connect database: " . $db->connect_error);
         }
         $contar = "SELECT COUNT(familia), COUNT(*), ROUND(COUNT(familia)/COUNT(*)*100,2), tomo
-FROM Personas
+FROM personas
     JOIN referenciaspersona ON idPersonaFK = idPersona
     JOIN referencias ON idReferenciaFK = idReferencia
 GROUP BY tomo";

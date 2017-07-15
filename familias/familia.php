@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="../AG.css" />
     <link rel="icon" type="image/png" href="tree.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <?php include '../utilidades/utilidades.php'; ?>
+    <?php
+    include '../utilidades/utilidades.php';
+    include('../session.php');
+    ?>
 </head>
 <body>
     <?php
@@ -22,7 +25,7 @@
             SELECT R.tomo, R.folio, R.vuelto, F.fechaMatrimonio, P1.familia, P2.familia, 
                 L.nombre, F.nombreMarido, F.apellidoMarido,
                 F.nombreEsposa, F.apellidoEsposa, P1.idPersona, P2.idPersona, L.preposicion
-            FROM Familias F 
+            FROM familias F 
                 LEFT JOIN referenciasmatrimonio RM ON F.idFamilia = RM.idMatrimonioFK 
                 LEFT JOIN referencias R ON RM.idReferenciaFK = R.idReferencia 
                 LEFT JOIN lugares L ON F.lugarMatrimonio = idLugar
@@ -38,7 +41,12 @@
     $id_esposa = $familia[12];
     ?>
     <header>
-        <h2><a href="editarFamilia.php?id=<?php echo $id_Familia; ?>">✎</a> Matrimonio entre 
+        <h2>
+            <?php
+            if ($usuario === 'javier') {
+                echo '<a href = "editarFamilia.php?id=' . $id_Familia . '">✎</a>';
+            }
+            ?>Matrimonio entre 
             <span class=smallcaps>
                 <?php echo nombre_completo($familia['nombreMarido'], $familia['apellidoMarido'], 0); ?> 
             </span> <?php y_o_e($familia['nombreEsposa']); ?>
@@ -138,7 +146,7 @@
 
             echo '<td class="centrar">';
 
-            $query_familias = "SELECT idFamilia FROM Familias WHERE esposo=" . $hijo['idPersona'] . ' OR esposa=' . $hijo['idPersona'];
+            $query_familias = "SELECT idFamilia FROM familias WHERE esposo=" . $hijo['idPersona'] . ' OR esposa=' . $hijo['idPersona'];
             $resultado_f = mysqli_query($db, $query_familias);
             while ($matrimonios = mysqli_fetch_array($resultado_f)) {
                 echo '<a href=familia.php?id=' . $matrimonios['idFamilia'] . '> 👪</a>';

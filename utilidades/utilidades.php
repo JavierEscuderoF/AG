@@ -14,7 +14,7 @@ function mostrar_ref($tomo, $folio, $vuelto) {
 }
 
 function conectar_bd() {
-    $a = new mysqli('localhost', 'root', 'javier1990', 'ag') or die(mysql_error());
+    $a = new mysqli('localhost', 'u564681783_javi', 'familia escudero', 'u564681783_ag') or die(mysql_error());
     if ($a->connect_error) {
         die("Unable to connect database: " . $a->connect_error);
     }

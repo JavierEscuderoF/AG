@@ -8,7 +8,10 @@
               type="image/png" 
               href="tree.png">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <?php include 'utilidades.php'; ?>
+        <?php 
+        include 'utilidades.php';
+        include('../session.php');
+        ?>
     </head>
     <body>
         <h2>Resultados de la búsqueda</h2>
@@ -30,9 +33,9 @@
         $query = "
             SELECT F.idFamilia, R.tomo, R.folio, R.vuelto, F.nombreMarido, F.apellidoMarido, F.nombreEsposa, F.apellidoEsposa,
             F.fechaMatrimonio
-            FROM Familias F 
+            FROM familias F 
                 LEFT JOIN referenciasmatrimonio RM ON F.idFamilia = RM.idMatrimonioFK 
-                LEFT JOIN Referencias R ON RM.idReferenciaFK = R.idReferencia 
+                LEFT JOIN referencias R ON RM.idReferenciaFK = R.idReferencia 
             WHERE ";
         if ($coleccion_matrimonio != 0) {
             $query .= "R.coleccion = " . $coleccion_matrimonio . " AND ";
@@ -118,18 +121,18 @@
         } else {
             echo "<p>No se han encontrado resultados.</p>";
         }
-
-        echo '<p><a href="../familias/crearFamilia.php?datos=' . $idPersona . '">👪 Crear nueva familia.</a></p>';
-
+        if ($usuario === 'javier') {
+            echo '<p><a href="../familias/crearFamilia.php?datos=' . $idPersona . '">👪 Crear nueva familia.</a></p>';
+        }
         if ($idPersona) {
             echo '<h3>Hermanos candidatos</h3>';
 
             $query_hermanos = "
             SELECT P.idPersona, R.tomo, R.folio, R.vuelto, P.nombrePadre, P.apellidoPadre, P.nombreMadre, P.apellidoMadre,
             P.fechaNacimiento, nombre
-            FROM Personas P 
+            FROM personas P 
                 JOIN referenciaspersona RP ON P.idPersona = RP.idPersonaFK 
-                JOIN Referencias R ON RP.idReferenciaFK = R.idReferencia 
+                JOIN referencias R ON RP.idReferenciaFK = R.idReferencia 
             WHERE R.coleccion = " . $coleccion_bautismos . " AND familia IS NULL AND ";
 
             if ($nombreMarido) {
