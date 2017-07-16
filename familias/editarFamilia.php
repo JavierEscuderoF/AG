@@ -23,7 +23,7 @@
             tomo, folio, vuelto, 
             nombrePadre_Marido, apellidoPadre_Marido, nombreMadre_Marido, apellidoMadre_Marido,
             nombrePadre_Esposa, apellidoPadre_Esposa, nombreMadre_Esposa, apellidoMadre_Esposa, 
-            esposo, esposa, fechaMatrimonio
+            esposo, esposa, fechaMatrimonio,lugarMatrimonio
         FROM familias
             LEFT JOIN referenciasmatrimonio ON idMatrimonioFK = idFamilia
             LEFT JOIN referencias ON idReferenciaFK = idReferencia
@@ -53,6 +53,26 @@
         <form action="../utilidades/update.php" method="post">
             <input type="hidden" name="ID" value="<?php echo $id_Familia; ?>">
             <input type="hidden" name="action" value="update">
+            <label for="lugar">Lugar del matrimonio (<a href="../lugares/crearLugar.php">➕</a>):</label>
+            <select name="lugar">
+                <option value="">Selecciona lugar de matrimonio</option>
+                <?php
+                $query_lugares = "SELECT * FROM lugares ORDER BY nombre";
+                $resultado_lugares = mysqli_query($db, $query_lugares);
+
+                while ($fila = mysqli_fetch_row($resultado_lugares)) {
+                    ?>
+                    <option value="<?php echo $fila[0]; ?>"
+                    <?php
+                    if ($familia['lugarMatrimonio'] == $fila[0]) {
+                        echo " selected";
+                    }
+                    ?>>
+                        <?php echo $fila[1]; ?></option>
+                    <?php
+                }
+                ?>
+            </select><br>
             <label for="fechaMatrimonio">Fecha de matrimonio:</label>
             <input type="date" name="fechaMatrimonio" value="<?php echo $familia['fechaMatrimonio']; ?>">
             <br>

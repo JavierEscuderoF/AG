@@ -44,7 +44,7 @@ and open the template in the editor.
             $query = "
             SELECT P.idPersona, R.tomo, R.folio, R.vuelto, P.nombrePadre, P.apellidoPadre, P.nombreMadre, P.apellidoMadre,
             P.fechaNacimiento, nombre
-            FROM Personas P 
+            FROM personas P 
                 LEFT JOIN referenciaspersona RP ON P.idPersona = RP.idPersonaFK 
                 LEFT JOIN referencias R ON R.idReferencia = RP.idReferenciaFK
             WHERE P.familia = " . $idFamilia . " ORDER BY 2,3,4;";
@@ -52,7 +52,7 @@ and open the template in the editor.
 
             if ($resultado->num_rows > 0) {
                 echo '<table>';
-                echo '<tr><th>Seleccionar</th><th>Ref.</th><th>Fecha</th><th>Nombre</th><th>Marido</th><th>Mujer</th></tr>';
+                echo '<tr><th>Seleccionar</th><th>Ref.</th><th>Fecha</th><th>Nombre</th><th>Padre</th><th>Madre</th></tr>';
                 
                 while ($hijo = mysqli_fetch_array($resultado)) {
 

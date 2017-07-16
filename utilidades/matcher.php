@@ -46,8 +46,8 @@ and open the template in the editor.
                 $query .= 'a=' . $idMujer;
             }
             $query .= ' WHERE idFamilia=' . $idPadres . ';';
-            $db = new mysqli('localhost', 'root', 'javier1990', 'ag');
-
+            $db = conectar_bd();
+            
             mysqli_query($db, $query);
 
             if (mysqli_affected_rows($db) >= 1) {

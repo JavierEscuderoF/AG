@@ -8,12 +8,15 @@
               type="image/png" 
               href="tree.png">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <?php 
+        <?php
         include 'utilidades.php';
         include('../session.php');
         ?>
     </head>
     <body>
+        <div class="topnav" id="myTopnav">
+            <a href="../index.php">Home</a>
+        </div>
         <h2>Resultados de la búsqueda</h2>
         <?php
         $db = conectar_bd();

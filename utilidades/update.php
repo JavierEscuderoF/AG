@@ -24,6 +24,7 @@
                 if ($id) {
 
                     $fechaMatrimonio = filter_input(INPUT_POST, "fechaMatrimonio");
+                    $lugarMatrimonio = filter_input(INPUT_POST, "lugar");
                     $nombrePadre_Marido = filter_input(INPUT_POST, "nombrePadre_Marido");
                     $apellidoPadre_Marido = filter_input(INPUT_POST, "apellidoPadre_Marido");
                     $nombreMadre_Marido = filter_input(INPUT_POST, "nombreMadre_Marido");
@@ -41,6 +42,9 @@
 
                     if ($fechaMatrimonio) {
                         $query .= 'fechaMatrimonio="' . $fechaMatrimonio . '" ,';
+                    }
+                    if ($lugarMatrimonio) {
+                        $query .= 'lugarMatrimonio=' . $lugarMatrimonio . ' ,';
                     }
                     if ($nombrePadre_Marido) {
                         $query .= ' nombrePadre_Marido="' . $nombrePadre_Marido . '", ';
@@ -147,16 +151,24 @@
                         $nombreMadre = filter_input(INPUT_POST, "nombreMadre");
                         $apellidoMadre = filter_input(INPUT_POST, "apellidoMadre");
                         $nombre = filter_input(INPUT_POST, "nombre");
+                        $lugarNacimiento = filter_input(INPUT_POST, "lugarNacimiento");
+                        $fh = filter_input(INPUT_POST, "fh");
+                        $fm = filter_input(INPUT_POST, "fm");
 
                         $query = "INSERT INTO personas (nombre";
                         if ($fechaNacimiento) {
                             $query .= ', fechaNacimiento, fechaBautismo';
                         }
-                        $query .= ", nombrePadre, apellidoPadre, nombreMadre, apellidoMadre) VALUES (";
+                        $query .= ", lugarNacimiento, nombrePadre, apellidoPadre, nombreMadre, apellidoMadre) VALUES (";
                         $query .= '"' . $nombre . '",';
                         if ($fechaNacimiento) {
                             $query .= "'" . $fechaNacimiento . "-00-00',";
                             $query .= "'" . $fechaNacimiento . "-00-00',";
+                        }
+                        if ($lugarNacimiento) {
+                            $query .= $lugarNacimiento . ',';
+                        } else {
+                            $query .= 'NULL,';
                         }
                         $query .= '"' . $nombrePadre . '",';
                         $query .= '"' . $apellidoPadre . '",';
@@ -179,6 +191,19 @@
                                     echo "Inserciones realizadas correctamente.";
                                 } else {
                                     echo "Error en la inserción en la base de datos (referencia): " . "<br>" . mysqli_error($db);
+                                }
+                            } else if ($fh || $fm) {
+                                $id_Persona = mysqli_insert_id($db);
+                                if (isset($fh) && $fh) {
+                                    $query_enlaza = "UPDATE familias SET esposo=$id_Persona WHERE idFamilia=$fh";
+                                } else {
+                                    $query_enlaza = "UPDATE familias SET esposa=$id_Persona WHERE idFamilia=$fm";
+                                }
+                                echo $query_enlaza;
+                                if (mysqli_query($db, $query_enlaza)) {
+                                    echo "Persona enlazada correctamente.";
+                                } else {
+                                    echo "Error en el enlace de la persona con la familia: " . "<br>" . mysqli_error($db);
                                 }
                             } else {
                                 echo "Persona añadida correctamente.";
@@ -283,6 +308,44 @@
                             }
                         } else {
                             echo "<p>Error en la inserción en la base de datos (familia): </p>" . mysqli_error($db);
+                        }
+                        break;
+                    case "lugar":
+                        $categorialugar = filter_input(INPUT_POST, "categorialugar");
+                        $lugarpadre = filter_input(INPUT_POST, "lugarpadre");
+                        $nombre = filter_input(INPUT_POST, "nombre");
+                        $wikidata = filter_input(INPUT_POST, "wikidata");
+                        $preposicion = filter_input(INPUT_POST, "preposicion");
+
+                        $query = 'INSERT INTO lugares (nombre,lugarPadre,categoria,preposicion,wikidata) VALUES ("' . $nombre . '",';
+                        if ($lugarpadre) {
+                            $query .= $lugarpadre . ',';
+                        } else {
+                            $query .= "NULL,";
+                        }
+                        if ($categorialugar) {
+                            $query .= $categorialugar . ',';
+                        } else {
+                            $query .= "NULL,";
+                        }
+                        if ($preposicion) {
+                            $query .= '"' . $preposicion . '",';
+                        } else {
+                            $query .= "NULL,";
+                        }
+                        if ($wikidata) {
+                            $query .= substr($wikidata, 1) . ',';
+                        } else {
+                            $query .= "NULL,";
+                        }
+
+                        $query = rtrim($query, ',');
+                        $query .= ");";
+
+                        if (mysqli_query($db, $query)) {
+                            echo "<p>Lugar insertado correctamente.</p>";
+                        } else {
+                            echo "<p>Error en la inserción en la base de datos (lugar): </p>" . mysqli_error($db);
                         }
                         break;
                 }

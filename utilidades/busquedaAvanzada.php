@@ -56,8 +56,10 @@ and open the template in the editor.
                 echo '<input type="hidden" name="idPersona" value="' . $id_Persona . '">';
             } else if ($id_FamiliaH) {
                 echo '<input type="hidden" name="idMarido" value="' . $id_FamiliaH . '">';
+                echo '<a href="../personas/crearPersona.php?fh=' . $id_FamiliaH . '">➕ </a>';
             } else if ($id_FamiliaM) {
                 echo '<input type="hidden" name="idMujer" value="' . $id_FamiliaM . '">';
+                echo '<a href="../personas/crearPersona.php?fm=' . $id_FamiliaM . '">➕ </a>';
             }
             ?>
             <h2><?php

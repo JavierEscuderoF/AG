@@ -24,7 +24,8 @@
     $query_datos = "
             SELECT R.tomo, R.folio, R.vuelto, F.fechaMatrimonio, P1.familia, P2.familia, 
                 L.nombre, F.nombreMarido, F.apellidoMarido,
-                F.nombreEsposa, F.apellidoEsposa, P1.idPersona, P2.idPersona, L.preposicion
+                F.nombreEsposa, F.apellidoEsposa, P1.idPersona, P2.idPersona, L.preposicion,
+                YEAR(F.fechaMatrimonio)-YEAR(P1.fechaNacimiento), YEAR(F.fechaMatrimonio)-YEAR(P2.fechaNacimiento)
             FROM familias F 
                 LEFT JOIN referenciasmatrimonio RM ON F.idFamilia = RM.idMatrimonioFK 
                 LEFT JOIN referencias R ON RM.idReferenciaFK = R.idReferencia 
@@ -39,12 +40,14 @@
     $lugar_matrimonio = $familia[6];
     $id_esposo = $familia[11];
     $id_esposa = $familia[12];
+    $edad_esposo = $familia[14];
+    $edad_esposa = $familia[15];
     ?>
     <header>
         <h2>
             <?php
             if ($usuario === 'javier') {
-                echo '<a href = "editarFamilia.php?id=' . $id_Familia . '">✎</a>';
+                echo '<a href = "editarFamilia.php?id=' . $id_Familia . '">✎ </a>';
             }
             ?>Matrimonio entre 
             <span class=smallcaps>
@@ -62,13 +65,19 @@
             echo nombre_completo($familia['nombreMarido'], $familia['apellidoMarido'], 0);
             // Si el marido está conectado
             if ($familia_esposo) {
-                echo ' <a href=familia.php?id=' . $familia_esposo . '&hijo=' . $id_esposo . '> 👨</a>';
+                echo " <a href=familia.php?id=$familia_esposo&hijo=$id_esposo> 👨 </a>";
+                if ($edad_esposo) {
+                    echo "($edad_esposo años)";
+                }
             }
             y_o_e($familia['nombreEsposa']);
             //Si la mujer está conectada
             echo nombre_completo($familia['nombreEsposa'], $familia['apellidoEsposa'], 0);
             if ($familia_esposa) {
-                echo '<a href=familia.php?id=' . $familia_esposa . '&hijo=' . $id_esposa . '> 👩</a>';
+                echo " <a href=familia.php?id=$familia_esposa&hijo=$id_esposa> 👩 </a>";
+                if ($edad_esposa) {
+                    echo "($edad_esposa años)";
+                }
             }
 
             if ($familia['fechaMatrimonio'] || $lugar_matrimonio) {

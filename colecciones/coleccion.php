@@ -62,6 +62,7 @@ and open the template in the editor.
 
         <?php
         switch ($tipo['idTipoColeccion']) {
+            /* FAMILIAS */
             case 1:
                 $query = "
                     SELECT *
@@ -74,7 +75,11 @@ and open the template in the editor.
                     echo '<table>';
                     echo '<tr><th>Folio</th><th>Fecha</th><th>Marido</th><th>Mujer</th><th>Familia</th></tr>';
                     while ($familia = mysqli_fetch_array($resultado)) {
-                        echo '<tr>';
+                        echo '<tr';
+                        if ($usuario === 'javier' && is_null($familia['lugarMatrimonio'])) {
+                            echo ' class="faltalugar"';
+                        }
+                        echo '>';
                         columna(referencia($tomo, $familia['folio'], $familia['vuelto']), 0);
 
                         if ($familia['fechaMatrimonio']) {
@@ -90,10 +95,15 @@ and open the template in the editor.
                         if ($familia['esposo']) {
                             $query_esp = "SELECT nombre, familia FROM personas where idPersona=" . $familia['esposo'];
                             $esposo = buscar_unico($query_esp, $db);
-
-                            $a = '<a href=../familias/familia.php?id=' . $esposo['familia'] . '&hijo=' . $familia['esposo'] . '>';
-                            $a .= nombre_completo($familia['nombreMarido'], $familia['apellidoMarido'], 0) . '</a>';
-
+                            if ($esposo['familia']) {
+                                $a = '<a href=../familias/familia.php?id=' . $esposo['familia'] . '&hijo=' . $familia['esposo'] . '>';
+                                $a .= nombre_completo($familia['nombreMarido'], $familia['apellidoMarido'], 0) . '</a>';
+                            } else {
+                                $query_lugar = "SELECT lugares.nombre FROM personas LEFT JOIN lugares ON lugarNacimiento = idLugar where idPersona=" . $familia['esposo'];
+                                $lugar = buscar_unico($query_lugar, $db);
+                                $a = '<i>' . nombre_completo($familia['nombreMarido'], $familia['apellidoMarido'], 0) . '</i>';
+                                $a .= '<span class="comentario"><br>de ' . $lugar[0] . '</span>';
+                            }
                             columna($a, 0);
                         } else {
                             echo '<td class=gris>';
@@ -106,11 +116,16 @@ and open the template in the editor.
                         if ($familia['esposa']) {
                             $query_esp = "SELECT nombre, familia FROM personas where idPersona=" . $familia['esposa'];
                             $esposa = buscar_unico($query_esp, $db);
-
-                            $string = '<a href=../familias/familia.php?id=' . $esposa['familia'] . '&hijo=' . $familia['esposa'] . '>';
-                            $string .= nombre_completo($familia['nombreEsposa'], $familia['apellidoEsposa'], 0) . '</a>';
-
-                            columna($string, 0);
+                            if ($esposa['familia']) {
+                                $a = '<a href=../familias/familia.php?id=' . $esposa['familia'] . '&hijo=' . $familia['esposa'] . '>';
+                                $a .= nombre_completo($familia['nombreEsposa'], $familia['apellidoEsposa'], 0) . '</a>';
+                            } else {
+                                $query_lugar = "SELECT lugares.nombre FROM personas LEFT JOIN lugares ON lugarNacimiento = idLugar where idPersona=" . $familia['esposa'];
+                                $lugar = buscar_unico($query_lugar, $db);
+                                $a = '<i>' . nombre_completo($familia['nombreEsposa'], $familia['apellidoEsposa'], 0) . '</i>';
+                                $a .= '<span class="comentario"><br>de ' . $lugar[0] . '</span>';
+                            }
+                            columna($a, 0);
                         } else {
                             echo '<td class=gris>';
                             echo nombre_completo($familia['nombreEsposa'], $familia['apellidoEsposa'], 0);
@@ -130,6 +145,8 @@ and open the template in the editor.
                     echo "No se ha encontrado ninguna familia.";
                 }
                 break;
+
+            /* PERSONAS */
             case 2:
 
                 $query = "
